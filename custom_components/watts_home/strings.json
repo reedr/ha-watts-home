@@ -9,6 +9,77 @@
       },
       "humidity": {
         "name": "Humidity"
+      },
+      "outdoor": {
+        "name": "Outdoor"
+      },
+      "slab_temperature": {
+        "name": "Slab"
+      },
+      "status_reason": {
+        "name": "Sub"
+      },
+      "target_slab": {
+        "name": "Slab"
+      },
+      "melt_time_remaining": {
+        "name": "MeltTime"
+      }
+    },
+    "binary_sensor": {
+      "water": {
+        "name": "Water"
+      },
+      "melting": {
+        "name": "Op"
+      }
+    },
+    "number": {
+      "melt_temperature": {
+        "name": "Melt"
+      },
+      "manual_melt_time": {
+        "name": "MeltManTime"
+      },
+      "melt_add_time": {
+        "name": "MeltAddTime"
+      },
+      "idle_temperature": {
+        "name": "Idle"
+      },
+      "storm_temperature": {
+        "name": "Storm"
+      },
+      "storm_run_time": {
+        "name": "StormRunTime"
+      },
+      "wwsd_temperature": {
+        "name": "WWSD"
+      },
+      "cwco_temperature": {
+        "name": "CWCO"
+      }
+    },
+    "switch": {
+      "manual_melt": {
+        "name": "MeltMan"
+      },
+      "idle_enable": {
+        "name": "IdleEnable"
+      },
+      "storm_enable": {
+        "name": "StormEnable"
+      },
+      "cwco_enable": {
+        "name": "CWCOEnable"
+      }
+    },
+    "select": {
+      "wwsd_enable": {
+        "name": "WWSDEnable"
+      },
+      "sensitivity": {
+        "name": "Sensitivity"
       }
     }
   },

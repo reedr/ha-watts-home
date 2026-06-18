@@ -5,13 +5,18 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from custom_components.watts_home.models import WattsDevice
+from custom_components.watts_home.models import WattsDevice, WattsDeviceKind
 
 _FIXTURE = Path(__file__).parent / "fixtures" / "devices.json"
+_SNOWMELT_FIXTURE = Path(__file__).parent / "fixtures" / "snowmelt_devices.json"
 
 
 def _raw_devices() -> list[dict]:
     return json.loads(_FIXTURE.read_text())["body"]
+
+
+def _raw_snowmelt_devices() -> list[dict]:
+    return json.loads(_SNOWMELT_FIXTURE.read_text())["body"]
 
 
 def test_model_validate_all_devices() -> None:
@@ -23,6 +28,28 @@ def test_model_validate_all_devices() -> None:
         assert isinstance(device.name, str)
         assert isinstance(device.model_number, str)
         assert isinstance(device.is_connected, bool)
+        assert device.is_thermostat
+
+
+def test_model_validate_live_snowmelt_devices() -> None:
+    raw = _raw_snowmelt_devices()
+    devices = [WattsDevice.model_validate(d) for d in raw]
+    assert len(devices) >= 1
+    for device in devices:
+        assert device.is_snowmelt
+        assert device.kind == WattsDeviceKind.SNOWMELT
+        assert device.device_type == "SnowMelt"
+        assert device.device_type_id == 4
+        assert device.model_number == "671"
+        assert device.data is not None
+        assert device.data.sensors is not None
+        assert device.data.sensors.outdoor is not None
+        assert device.data.sensors.slab is not None
+        assert device.data.sensors.water is not None
+        assert device.data.sensors.water.val == "Dry"
+        assert device.data.melt is not None
+        assert device.data.melt_man is not None
+        assert device.data.melt_man.enum == ["Stop", "Melt"]
 
 
 def test_extra_fields_are_ignored() -> None:
@@ -77,25 +104,18 @@ def test_null_data_subfields_parse_without_error() -> None:
     assert device.data.target is None
 
 
-def test_target_without_range_fields_parses() -> None:
-    """SnowMelt controls (e.g. Tekmar 671) return Target without Min/Max/Steps."""
+def test_snowmelt_kind_from_model_number_when_device_type_missing() -> None:
     device = WattsDevice.model_validate(
         {
             "deviceId": "snowmelt-1",
             "name": "Driveway",
             "modelNumber": "671",
             "isConnected": True,
-            "data": {
-                "Target": {"Heat": 38.0},
-            },
+            "data": None,
         }
     )
-    assert device.data is not None
-    assert device.data.target is not None
-    assert device.data.target.heat == 38.0
-    assert device.data.target.min is None
-    assert device.data.target.max is None
-    assert device.data.target.steps is None
+    assert device.is_snowmelt
+    assert device.kind == WattsDeviceKind.SNOWMELT
 
 
 def test_full_device_fields_round_trip() -> None:
@@ -105,10 +125,12 @@ def test_full_device_fields_round_trip() -> None:
             "deviceId": "abc-123",
             "name": "Hallway",
             "modelNumber": "562",
+            "deviceType": "Thermostat",
+            "deviceTypeId": 2,
             "isConnected": True,
             "data": {
                 "Mode": {"Val": "Heat", "Enum": ["Heat", "Cool", "Auto", "Off"]},
-                "State": {"Op": "Heat"},
+                "State": {"Op": "Heat", "Sub": "None"},
                 "Sensors": {
                     "Room": {"Val": 71.5, "Status": "Okay"},
                     "Floor": {"Val": 0.0, "Status": "NotInstalled"},
@@ -129,12 +151,14 @@ def test_full_device_fields_round_trip() -> None:
         }
     )
     assert device.device_id == "abc-123"
+    assert device.is_thermostat
     assert device.data is not None
     assert device.data.mode is not None
     assert device.data.mode.val == "Heat"
     assert device.data.mode.enum == ["Heat", "Cool", "Auto", "Off"]
     assert device.data.state is not None
     assert device.data.state.op == "Heat"
+    assert device.data.state.sub == "None"
     assert device.data.sensors is not None
     assert device.data.sensors.room is not None
     assert device.data.sensors.room.val == 71.5

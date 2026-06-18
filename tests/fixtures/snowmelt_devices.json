@@ -1,0 +1,413 @@
+{
+  "errorNumber": 0,
+  "body": [
+    {
+      "data": {
+        "DateTime": "2026-06-18T22:15:07Z",
+        "TZOffset": -21600,
+        "State": {
+          "Op": "Off",
+          "Sub": "WWSD"
+        },
+        "Target": {
+          "Slab": {
+            "Val": 0,
+            "Status": "Off"
+          },
+          "MeltTime": {
+            "Val": 0,
+            "Status": "Absent"
+          }
+        },
+        "Sensors": {
+          "Outdoor": {
+            "Val": 66,
+            "Status": "Okay",
+            "State": "Okay"
+          },
+          "Slab": {
+            "Val": 62,
+            "Status": "Okay",
+            "State": "Okay"
+          },
+          "Water": {
+            "Val": "Dry",
+            "Status": "Okay",
+            "State": "Okay"
+          }
+        },
+        "Melt": {
+          "Active": 1,
+          "Val": 34,
+          "Min": 32,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "IdleEnable": {
+          "Active": 1,
+          "Val": "Off",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "Idle": {
+          "Active": 0,
+          "Val": 20,
+          "Min": 20,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "StormEnable": {
+          "Active": 1,
+          "Val": "Off",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "Storm": {
+          "Active": 0,
+          "Val": 20,
+          "Min": 20,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "WWSDEnable": {
+          "Active": 1,
+          "Val": "Auto",
+          "Enum": [
+            "Auto",
+            "On"
+          ]
+        },
+        "WWSD": {
+          "Active": 0,
+          "Val": 40,
+          "Min": 32,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "CWCOEnable": {
+          "Active": 1,
+          "Val": "On",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "CWCO": {
+          "Active": 1,
+          "Val": 5,
+          "Min": -30,
+          "Max": 50,
+          "Steps": 1.0
+        },
+        "MeltMan": {
+          "Active": 0,
+          "Val": "Stop",
+          "Enum": [
+            "Stop",
+            "Melt"
+          ]
+        },
+        "MeltManTime": {
+          "Active": 1,
+          "Val": 240,
+          "Min": 30,
+          "Max": 1440
+        },
+        "MeltAddTime": {
+          "Active": 1,
+          "Val": 0,
+          "Min": 0,
+          "Max": 360
+        },
+        "StormRunTime": {
+          "Active": 0,
+          "Val": null,
+          "Min": 30,
+          "Max": 1440
+        },
+        "Sensitivity": {
+          "Active": 1,
+          "Val": "Auto",
+          "Enum": [
+            "Auto",
+            "Min",
+            "-2",
+            "-1",
+            "Mid",
+            "+1",
+            "+2",
+            "Max"
+          ]
+        },
+        "TempUnits": {
+          "Active": 1,
+          "Val": "F",
+          "Enum": [
+            "F",
+            "C"
+          ]
+        },
+        "Energy": {
+          "Heat": {
+            "Daily": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Monthly": [
+              179.0,
+              130.0,
+              80.0,
+              92.0,
+              12.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              53.0,
+              106.0,
+              262.0
+            ]
+          }
+        },
+        "Units": "Imperial"
+      },
+      "isConnected": true,
+      "requestingUser": "98dc016a-2ec7-4a61-b104-7c25c55b46ab",
+      "deviceId": "302608ae-1d3d-554a-a257-cf15c9de8e8a",
+      "name": "SM Porte Cochere",
+      "modelId": 4,
+      "modelNumber": "671",
+      "deviceType": "SnowMelt",
+      "deviceTypeId": 4,
+      "location": {
+        "locationId": "cdb22681-f925-48bb-9760-6802ef776356",
+        "name": "RMR",
+        "address": {
+          "address": "3560 Yellowstone Preserve Road ",
+          "address2": "",
+          "city": "Big Sky",
+          "state_province": "MT",
+          "zipcode": "59716",
+          "country": "US"
+        },
+        "awayState": 0,
+        "userType": 1
+      },
+      "imageUrl": null,
+      "isShared": false
+    },
+    {
+      "data": {
+        "DateTime": "2026-06-18T22:15:12Z",
+        "TZOffset": -21600,
+        "State": {
+          "Op": "Off",
+          "Sub": "WWSD"
+        },
+        "Target": {
+          "Slab": {
+            "Val": 0,
+            "Status": "Off"
+          },
+          "MeltTime": {
+            "Val": 0,
+            "Status": "Absent"
+          }
+        },
+        "Sensors": {
+          "Outdoor": {
+            "Val": 63,
+            "Status": "Okay",
+            "State": "Okay"
+          },
+          "Slab": {
+            "Val": 101,
+            "Status": "Okay",
+            "State": "Okay"
+          },
+          "Water": {
+            "Val": "Dry",
+            "Status": "Okay",
+            "State": "Okay"
+          }
+        },
+        "Melt": {
+          "Active": 1,
+          "Val": 36,
+          "Min": 32,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "IdleEnable": {
+          "Active": 1,
+          "Val": "Off",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "Idle": {
+          "Active": 0,
+          "Val": 20,
+          "Min": 20,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "StormEnable": {
+          "Active": 1,
+          "Val": "Off",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "Storm": {
+          "Active": 0,
+          "Val": 25,
+          "Min": 20,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "WWSDEnable": {
+          "Active": 1,
+          "Val": "Auto",
+          "Enum": [
+            "Auto",
+            "On"
+          ]
+        },
+        "WWSD": {
+          "Active": 0,
+          "Val": 40,
+          "Min": 32,
+          "Max": 95,
+          "Steps": 1.0
+        },
+        "CWCOEnable": {
+          "Active": 1,
+          "Val": "On",
+          "Enum": [
+            "Off",
+            "On"
+          ]
+        },
+        "CWCO": {
+          "Active": 1,
+          "Val": 5,
+          "Min": -30,
+          "Max": 50,
+          "Steps": 1.0
+        },
+        "MeltMan": {
+          "Active": 0,
+          "Val": "Stop",
+          "Enum": [
+            "Stop",
+            "Melt"
+          ]
+        },
+        "MeltManTime": {
+          "Active": 1,
+          "Val": 240,
+          "Min": 30,
+          "Max": 1440
+        },
+        "MeltAddTime": {
+          "Active": 1,
+          "Val": 0,
+          "Min": 0,
+          "Max": 360
+        },
+        "StormRunTime": {
+          "Active": 0,
+          "Val": null,
+          "Min": 30,
+          "Max": 1440
+        },
+        "Sensitivity": {
+          "Active": 1,
+          "Val": "Auto",
+          "Enum": [
+            "Auto",
+            "Min",
+            "-2",
+            "-1",
+            "Mid",
+            "+1",
+            "+2",
+            "Max"
+          ]
+        },
+        "TempUnits": {
+          "Active": 1,
+          "Val": "F",
+          "Enum": [
+            "F",
+            "C"
+          ]
+        },
+        "Energy": {
+          "Heat": {
+            "Daily": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Monthly": [
+              137.0,
+              126.0,
+              86.0,
+              89.0,
+              18.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              56.0,
+              72.0,
+              210.0
+            ]
+          }
+        },
+        "Units": "Imperial"
+      },
+      "isConnected": true,
+      "requestingUser": "98dc016a-2ec7-4a61-b104-7c25c55b46ab",
+      "deviceId": "1f0895c9-bc40-51ea-a4e8-fa3ca50ad84c",
+      "name": "SM Garage",
+      "modelId": 4,
+      "modelNumber": "671",
+      "deviceType": "SnowMelt",
+      "deviceTypeId": 4,
+      "location": {
+        "locationId": "cdb22681-f925-48bb-9760-6802ef776356",
+        "name": "RMR",
+        "address": {
+          "address": "3560 Yellowstone Preserve Road ",
+          "address2": "",
+          "city": "Big Sky",
+          "state_province": "MT",
+          "zipcode": "59716",
+          "country": "US"
+        },
+        "awayState": 0,
+        "userType": 1
+      },
+      "imageUrl": null,
+      "isShared": false
+    }
+  ]
+}

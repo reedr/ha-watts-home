@@ -9,7 +9,14 @@ from homeassistant.core import HomeAssistant
 
 from .coordinator import WattsDataUpdateCoordinator
 
-PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.SENSOR]
+PLATFORMS: list[Platform] = [
+    Platform.CLIMATE,
+    Platform.SENSOR,
+    Platform.BINARY_SENSOR,
+    Platform.SWITCH,
+    Platform.NUMBER,
+    Platform.SELECT,
+]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:

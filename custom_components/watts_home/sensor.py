@@ -8,18 +8,41 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, UnitOfTemperature
+from homeassistant.const import PERCENTAGE, Platform, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, MODEL_NAMES
+from .const import DOMAIN, device_model_name
 from .coordinator import WattsDataUpdateCoordinator
-from .models import WattsDevice
+from .models import WattsDevice, WattsSensor
+from .snowmelt_entity import WattsSnowmeltEntity, async_setup_snowmelt_platform
+from .snowmelt_mapping import (
+    sensor_numeric_value,
+    sensor_ok,
+    snowmelt_temperature_unit,
+    target_value,
+)
+from .snowmelt_registry import SnowmeltDescriptor
 
 
 async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    await _async_setup_thermostat_sensors(hass, entry, async_add_entities)
+    await async_setup_snowmelt_platform(
+        hass,
+        entry,
+        async_add_entities,
+        Platform.SENSOR,
+        WattsSnowmeltSensor,
+    )
+
+
+async def _async_setup_thermostat_sensors(
     hass: HomeAssistant,
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
@@ -31,6 +54,8 @@ async def async_setup_entry(
     def _async_add_new() -> None:
         new: list[SensorEntity] = []
         for device_id, device in coordinator.data.items():
+            if not device.is_thermostat:
+                continue
             s = device.data.sensors if device.data else None
             if s and s.room and s.room.status == "Okay":
                 uid = f"{device_id}_room_temp"
@@ -58,9 +83,7 @@ def _device_info(device: WattsDevice) -> DeviceInfo:
     return DeviceInfo(
         identifiers={(DOMAIN, device.device_id)},
         name=device.name,
-        model=MODEL_NAMES.get(
-            device.model_number, f"Tekmar WiFi Thermostat {device.model_number}"
-        ),
+        model=device_model_name(device.model_number),
         manufacturer="Watts Home",
     )
 
@@ -226,3 +249,67 @@ class WattsHumiditySensor(CoordinatorEntity[WattsDataUpdateCoordinator], SensorE
         if s and s.rh and s.rh.status == "Okay":
             return s.rh.val
         return None
+
+
+class WattsSnowmeltSensor(WattsSnowmeltEntity, SensorEntity):
+    """Read-only sensor derived from a snowmelt API field."""
+
+    def __init__(
+        self,
+        coordinator: WattsDataUpdateCoordinator,
+        device_id: str,
+        descriptor: SnowmeltDescriptor,
+    ) -> None:
+        super().__init__(coordinator, device_id, descriptor)
+        if descriptor.device_class == "temperature":
+            self._attr_device_class = SensorDeviceClass.TEMPERATURE
+        if descriptor.state_class == "measurement":
+            self._attr_state_class = SensorStateClass.MEASUREMENT
+        if descriptor.unit == "temperature":
+            device = coordinator.data[device_id]
+            unit = snowmelt_temperature_unit(device)
+            self._attr_native_unit_of_measurement = (
+                UnitOfTemperature.FAHRENHEIT
+                if unit == "F"
+                else UnitOfTemperature.CELSIUS
+            )
+        elif descriptor.unit == "duration":
+            self._attr_native_unit_of_measurement = UnitOfTime.MINUTES
+
+    @property
+    def native_value(self) -> float | str | None:
+        device = self._device()
+        desc = self.descriptor
+        if desc.kind == "sensor_reading":
+            sensors = device.data.sensors if device.data else None
+            if sensors is None or desc.sensor_field is None:
+                return None
+            sensor: WattsSensor | None = getattr(sensors, desc.sensor_field, None)
+            if desc.sensor_field in {"outdoor", "slab"}:
+                return sensor_numeric_value(sensor)
+            return sensor.val if sensor is not None else None
+        if desc.kind == "target_reading":
+            target = device.data.target if device.data else None
+            if target is None or desc.target_field is None:
+                return None
+            return target_value(getattr(target, desc.target_field, None))
+        if desc.kind == "state_reading":
+            state = device.data.state if device.data else None
+            if state is None or desc.state_field is None:
+                return None
+            return getattr(state, desc.state_field, None)
+        return None
+
+    @property
+    def available(self) -> bool:
+        if not super().available:
+            return False
+        device = self._device()
+        desc = self.descriptor
+        if desc.kind == "sensor_reading" and desc.sensor_field in {"outdoor", "slab"}:
+            sensors = device.data.sensors if device.data else None
+            if sensors is None or desc.sensor_field is None:
+                return False
+            sensor = getattr(sensors, desc.sensor_field, None)
+            return sensor_ok(sensor)
+        return True

@@ -115,6 +115,12 @@ class WattsApiClient:
                 settings["Cool"] = cool
         await self._patch(f"/Device/{device_id}", {"Settings": settings})
 
+    async def set_setting(
+        self, device_id: str, key: str, value: str | float | int
+    ) -> None:
+        """Set a single snowmelt or device setting by API key."""
+        await self._patch(f"/Device/{device_id}", {"Settings": {key: value}})
+
     @staticmethod
     def find_default_location(locations: list[dict[str, Any]]) -> dict[str, Any]:
         """Return the best location: default+devices first, then any with devices."""

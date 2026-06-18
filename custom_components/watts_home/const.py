@@ -26,12 +26,29 @@ CONF_SCAN_INTERVAL: Final = "scan_interval"
 
 TOKEN_REFRESH_BUFFER_SECONDS: Final = 120
 
+DEVICE_TYPE_THERMOSTAT: Final = "Thermostat"
+DEVICE_TYPE_SNOWMELT: Final = "SnowMelt"
+
+THERMOSTAT_MODEL_NUMBERS: frozenset[str] = frozenset({"561", "562", "563", "564"})
+SNOWMELT_MODEL_NUMBERS: frozenset[str] = frozenset({"670", "671"})
+
 MODEL_NAMES: dict[str, str] = {
     "561": "Tekmar WiFi Thermostat 561",
     "562": "Tekmar WiFi Thermostat 562",
     "563": "Tekmar WiFi Thermostat 563",
     "564": "Tekmar WiFi Thermostat 564",
+    "670": "Tekmar WiFi Snow Melting Control 670",
+    "671": "Tekmar WiFi Snow Melting Control 671",
 }
+
+
+def device_model_name(model_number: str) -> str:
+    """Return a human-readable model name for a device."""
+    if model_number in MODEL_NAMES:
+        return MODEL_NAMES[model_number]
+    if model_number in SNOWMELT_MODEL_NUMBERS:
+        return f"Tekmar WiFi Snow Melting Control {model_number}"
+    return f"Tekmar WiFi Thermostat {model_number}"
 
 # Maps Watts API HVAC mode values to Home Assistant HVAC modes.
 # Keys match exactly what the API returns (title-case).

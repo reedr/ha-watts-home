@@ -22,9 +22,9 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import (
     DOMAIN,
     HA_TO_WATTS_MODE,
-    MODEL_NAMES,
     WATTS_TO_HA_ACTION,
     WATTS_TO_HA_MODE,
+    device_model_name,
 )
 from .coordinator import WattsDataUpdateCoordinator
 from .models import WattsDevice
@@ -162,8 +162,8 @@ async def async_setup_entry(
     def _async_add_new() -> None:
         new = [
             WattsClimateEntity(coordinator, device_id)
-            for device_id in coordinator.data
-            if device_id not in known_device_ids
+            for device_id, device in coordinator.data.items()
+            if device_id not in known_device_ids and device.is_thermostat
         ]
         if new:
             known_device_ids.update(e._device_id for e in new)
@@ -196,9 +196,7 @@ class WattsClimateEntity(CoordinatorEntity[WattsDataUpdateCoordinator], ClimateE
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, device_id)},
             name=device.name,
-            model=MODEL_NAMES.get(
-                device.model_number, f"Tekmar WiFi Thermostat {device.model_number}"
-            ),
+            model=device_model_name(device.model_number),
             manufacturer="Watts Home",
         )
 
