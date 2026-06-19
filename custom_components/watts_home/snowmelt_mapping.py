@@ -40,9 +40,20 @@ def water_detected(sensor: WattsSensor | None) -> bool | None:
 
 
 def is_melting(device: WattsDevice) -> bool | None:
-    if device.data is None or device.data.state is None:
+    """Return True when the controller is actively melting.
+
+    Manual melt sets MeltMan to Melt and State.Op to Melt. When idle, Op is Off
+    and MeltMan is Stop (Sub carries the idle reason, e.g. WWSD).
+    """
+    if device.data is None:
         return None
-    return device.data.state.op != "Off"
+    melt_man = device.data.melt_man
+    if melt_man is not None and melt_man.val == "Melt":
+        return True
+    state = device.data.state
+    if state is not None and state.op == "Melt":
+        return True
+    return False
 
 
 def target_value(target: WattsTargetValue | None) -> float | int | None:

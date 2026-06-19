@@ -11,75 +11,75 @@
         "name": "Humidity"
       },
       "outdoor": {
-        "name": "Outdoor"
+        "name": "Outdoor Temperature"
       },
       "slab_temperature": {
-        "name": "Slab"
+        "name": "Slab Temperature"
       },
       "status_reason": {
-        "name": "Sub"
+        "name": "Status Reason"
       },
       "target_slab": {
-        "name": "Slab"
+        "name": "Slab Target"
       },
       "melt_time_remaining": {
-        "name": "MeltTime"
+        "name": "Melt Time Remaining"
       }
     },
     "binary_sensor": {
       "water": {
-        "name": "Water"
+        "name": "Water Detected"
       },
       "melting": {
-        "name": "Op"
+        "name": "Melting Active"
       }
     },
     "number": {
       "melt_temperature": {
-        "name": "Melt"
+        "name": "Melting Setpoint"
       },
       "manual_melt_time": {
-        "name": "MeltManTime"
+        "name": "Manual Melt Duration"
       },
       "melt_add_time": {
-        "name": "MeltAddTime"
+        "name": "Additional Melt Time"
       },
       "idle_temperature": {
-        "name": "Idle"
+        "name": "Idle Setpoint"
       },
       "storm_temperature": {
-        "name": "Storm"
+        "name": "Storm Setpoint"
       },
       "storm_run_time": {
-        "name": "StormRunTime"
+        "name": "Storm Run Duration"
       },
       "wwsd_temperature": {
-        "name": "WWSD"
+        "name": "Warm Weather Shutoff Setpoint"
       },
       "cwco_temperature": {
-        "name": "CWCO"
+        "name": "Cold Weather Cutoff Setpoint"
       }
     },
     "switch": {
       "manual_melt": {
-        "name": "MeltMan"
+        "name": "Manual Melt"
       },
       "idle_enable": {
-        "name": "IdleEnable"
+        "name": "Idle Enabled"
       },
       "storm_enable": {
-        "name": "StormEnable"
+        "name": "Storm Enabled"
       },
       "cwco_enable": {
-        "name": "CWCOEnable"
+        "name": "Cold Weather Cutoff Enabled"
       }
     },
     "select": {
       "wwsd_enable": {
-        "name": "WWSDEnable"
+        "name": "Warm Weather Shutoff Mode"
       },
       "sensitivity": {
-        "name": "Sensitivity"
+        "name": "Melt Sensitivity"
       }
     }
   },

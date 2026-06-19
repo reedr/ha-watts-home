@@ -38,7 +38,7 @@ def snowmelt_devices_fixture() -> list[WattsDevice]:
     return [WattsDevice.model_validate(item) for item in raw]
 
 
-def test_friendly_names_match_api_keys() -> None:
+def test_friendly_names_match_registry() -> None:
     strings = json.loads(_STRINGS.read_text())["entity"]
     platform_map = {
         Platform.SENSOR: "sensor",
@@ -50,7 +50,7 @@ def test_friendly_names_match_api_keys() -> None:
     for descriptor in SNOWMELT_DESCRIPTORS:
         platform_strings = strings[platform_map[descriptor.platform]]
         assert descriptor.key in platform_strings
-        assert platform_strings[descriptor.key]["name"] == descriptor.api_key
+        assert platform_strings[descriptor.key]["name"] == descriptor.friendly_name
 
 
 def test_all_descriptors_have_unique_keys() -> None:
@@ -73,12 +73,31 @@ def test_expected_entity_count_per_device(snowmelt_devices: list[WattsDevice]) -
     assert len(descriptors_for_platform(Platform.SELECT)) == 2
 
 
+def test_is_melting_manual_melt_from_fixture() -> None:
+    raw = json.loads(
+        (
+            Path(__file__).parent / "fixtures" / "snowmelt_bunkroom_manual_melt.json"
+        ).read_text()
+    )["body"][0]
+    device = WattsDevice.model_validate(raw)
+    assert device.data is not None
+    assert device.data.melt_man is not None
+    assert device.data.melt_man.val == "Melt"
+    assert device.data.state is not None
+    assert device.data.state.op == "Melt"
+    assert device.data.state.sub == "None"
+    assert device.data.target is not None
+    assert device.data.target.melt_time is not None
+    assert device.data.target.melt_time.val == 234
+    assert device.data.target.melt_time.status == "Okay"
+    assert is_melting(device) is True
+
+
 def test_water_and_melt_man_helpers(snowmelt_devices: list[WattsDevice]) -> None:
     device = snowmelt_devices[0]
     assert device.data is not None
     assert device.data.sensors is not None
     assert water_detected(device.data.sensors.water) is False
-    assert is_melting(device) is False
     assert enum_is_switch(device.data.melt_man) is True
     assert enum_to_switch_is_on(device.data.melt_man.val) is False
     assert switch_to_enum_value(True, device.data.melt_man) == "Melt"
