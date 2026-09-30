@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from datetime import timedelta
 from typing import Any
 
@@ -14,7 +15,7 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .api import WattsApiClient, WattsApiError
-from .auth import WattsAuth, WattsAuthError, WattsTokenExpiredError
+from .auth import WattsAuth, WattsAuthError, WattsServerError, WattsTokenExpiredError
 from .models import WattsDevice
 from .const import (
     CONF_SCAN_INTERVAL,
@@ -28,8 +29,6 @@ _LOGGER = __import__("logging").getLogger(__name__)
 
 class WattsDataUpdateCoordinator(DataUpdateCoordinator[dict[str, WattsDevice]]):
     """Polls the Watts API and manages token lifecycle."""
-
-    location_id: str
 
     def __init__(
         self,
@@ -48,6 +47,14 @@ class WattsDataUpdateCoordinator(DataUpdateCoordinator[dict[str, WattsDevice]]):
         )
         self._entry = entry
         self._session = session
+
+    def optimistic_update(
+        self, device_id: str, updater: Callable[[WattsDevice], None]
+    ) -> None:
+        """Apply an optimistic state change so entities reflect it immediately."""
+        if self.data and device_id in self.data:
+            updater(self.data[device_id])
+            self.async_set_updated_data(self.data)
 
     async def _ensure_token(self) -> str:
         """Return a valid access_token, refreshing or re-logging as needed."""
@@ -69,6 +76,9 @@ class WattsDataUpdateCoordinator(DataUpdateCoordinator[dict[str, WattsDevice]]):
                 return str(data["access_token"])
             except WattsTokenExpiredError:
                 _LOGGER.debug("Refresh token expired, falling back to full re-login")
+            except WattsServerError:
+                # Transient — surface as UpdateFailed so polling continues.
+                raise
             except WattsAuthError as exc:
                 raise ConfigEntryAuthFailed(str(exc)) from exc
 
@@ -84,6 +94,8 @@ class WattsDataUpdateCoordinator(DataUpdateCoordinator[dict[str, WattsDevice]]):
             self.hass.config_entries.async_update_entry(self._entry, data=data)
             _LOGGER.debug("Full re-login succeeded")
             return str(data["access_token"])
+        except WattsServerError:
+            raise
         except WattsAuthError as exc:
             raise ConfigEntryAuthFailed(str(exc)) from exc
 
@@ -92,14 +104,16 @@ class WattsDataUpdateCoordinator(DataUpdateCoordinator[dict[str, WattsDevice]]):
             access_token = await self._ensure_token()
             client = WattsApiClient(self._session, access_token)
             locations = await client.get_locations()
-            location = WattsApiClient.find_default_location(locations)
-            self.location_id = str(location["locationId"])
-            _LOGGER.debug(
-                "Polling location %s (%s)", location.get("name"), self.location_id
-            )
-            devices = await client.get_devices(self.location_id)
+            devices: dict[str, WattsDevice] = {}
+            for location in WattsApiClient.locations_with_devices(locations):
+                location_id = str(location["locationId"])
+                _LOGGER.debug(
+                    "Polling location %s (%s)", location.get("name"), location_id
+                )
+                for device in await client.get_devices(location_id):
+                    devices[device.device_id] = device
             _LOGGER.debug("Fetched %d device(s)", len(devices))
-            return {d.device_id: d for d in devices}
+            return devices
         except ConfigEntryAuthFailed:
             raise
         except (WattsApiError, WattsAuthError) as exc:

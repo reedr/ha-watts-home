@@ -12,8 +12,9 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, device_model_name
+from .const import DOMAIN
 from .coordinator import WattsDataUpdateCoordinator
+from .helpers import device_model_name
 from .models import WattsDevice
 from .snowmelt_mapping import get_data_attr
 from .snowmelt_registry import SnowmeltDescriptor, descriptors_for_platform
@@ -23,7 +24,7 @@ def snowmelt_device_info(device: WattsDevice) -> DeviceInfo:
     return DeviceInfo(
         identifiers={(DOMAIN, device.device_id)},
         name=device.name,
-        model=device_model_name(device.model_number),
+        model=device_model_name(device),
         manufacturer="Watts Home",
     )
 
