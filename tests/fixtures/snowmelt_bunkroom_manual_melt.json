@@ -46,10 +46,7 @@
         "IdleEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Idle": {
           "Active": 0,
@@ -61,10 +58,7 @@
         "StormEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Storm": {
           "Active": 0,
@@ -76,10 +70,7 @@
         "WWSDEnable": {
           "Active": 1,
           "Val": "On",
-          "Enum": [
-            "Auto",
-            "On"
-          ]
+          "Enum": ["Auto", "On"]
         },
         "WWSD": {
           "Active": 1,
@@ -91,10 +82,7 @@
         "CWCOEnable": {
           "Active": 1,
           "Val": "On",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "CWCO": {
           "Active": 1,
@@ -106,10 +94,7 @@
         "MeltMan": {
           "Active": 1,
           "Val": "Melt",
-          "Enum": [
-            "Stop",
-            "Melt"
-          ]
+          "Enum": ["Stop", "Melt"]
         },
         "MeltManTime": {
           "Active": 1,
@@ -132,48 +117,18 @@
         "Sensitivity": {
           "Active": 1,
           "Val": "Max",
-          "Enum": [
-            "Auto",
-            "Min",
-            "-2",
-            "-1",
-            "Mid",
-            "+1",
-            "+2",
-            "Max"
-          ]
+          "Enum": ["Auto", "Min", "-2", "-1", "Mid", "+1", "+2", "Max"]
         },
         "TempUnits": {
           "Active": 1,
           "Val": "F",
-          "Enum": [
-            "F",
-            "C"
-          ]
+          "Enum": ["F", "C"]
         },
         "Energy": {
           "Heat": {
-            "Daily": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
+            "Daily": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             "Monthly": [
-              123.0,
-              71.0,
-              59.0,
-              67.0,
-              3.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              33.0,
-              42.0,
+              123.0, 71.0, 59.0, 67.0, 3.0, 0.0, 0.0, 0.0, 0.0, 33.0, 42.0,
               154.0
             ]
           }

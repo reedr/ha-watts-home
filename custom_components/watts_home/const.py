@@ -38,7 +38,9 @@ DEVICE_TYPE_SNOWMELT: Final = "SnowMelt"
 # Setpoint controls (e.g. the 170) are handled like thermostats.
 DEVICE_TYPE_SETPOINT: Final = "Setpoint"
 
-THERMOSTAT_MODEL_NUMBERS: frozenset[str] = frozenset({"170", "561", "562", "563", "564"})
+THERMOSTAT_MODEL_NUMBERS: frozenset[str] = frozenset(
+    {"170", "561", "562", "563", "564"}
+)
 SNOWMELT_MODEL_NUMBERS: frozenset[str] = frozenset({"670", "671"})
 
 MODEL_NAMES: dict[str, str] = {

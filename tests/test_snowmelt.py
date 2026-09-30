@@ -25,10 +25,7 @@ from custom_components.watts_home.snowmelt_registry import (
 
 _FIXTURE = Path(__file__).parent / "fixtures" / "snowmelt_devices.json"
 _STRINGS = (
-    Path(__file__).parent.parent
-    / "custom_components"
-    / "watts_home"
-    / "strings.json"
+    Path(__file__).parent.parent / "custom_components" / "watts_home" / "strings.json"
 )
 
 

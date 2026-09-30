@@ -46,10 +46,7 @@
         "IdleEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Idle": {
           "Active": 0,
@@ -61,10 +58,7 @@
         "StormEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Storm": {
           "Active": 0,
@@ -76,10 +70,7 @@
         "WWSDEnable": {
           "Active": 1,
           "Val": "Auto",
-          "Enum": [
-            "Auto",
-            "On"
-          ]
+          "Enum": ["Auto", "On"]
         },
         "WWSD": {
           "Active": 0,
@@ -91,10 +82,7 @@
         "CWCOEnable": {
           "Active": 1,
           "Val": "On",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "CWCO": {
           "Active": 1,
@@ -106,10 +94,7 @@
         "MeltMan": {
           "Active": 0,
           "Val": "Stop",
-          "Enum": [
-            "Stop",
-            "Melt"
-          ]
+          "Enum": ["Stop", "Melt"]
         },
         "MeltManTime": {
           "Active": 1,
@@ -132,48 +117,18 @@
         "Sensitivity": {
           "Active": 1,
           "Val": "Auto",
-          "Enum": [
-            "Auto",
-            "Min",
-            "-2",
-            "-1",
-            "Mid",
-            "+1",
-            "+2",
-            "Max"
-          ]
+          "Enum": ["Auto", "Min", "-2", "-1", "Mid", "+1", "+2", "Max"]
         },
         "TempUnits": {
           "Active": 1,
           "Val": "F",
-          "Enum": [
-            "F",
-            "C"
-          ]
+          "Enum": ["F", "C"]
         },
         "Energy": {
           "Heat": {
-            "Daily": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
+            "Daily": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             "Monthly": [
-              179.0,
-              130.0,
-              80.0,
-              92.0,
-              12.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              53.0,
-              106.0,
+              179.0, 130.0, 80.0, 92.0, 12.0, 0.0, 0.0, 0.0, 0.0, 53.0, 106.0,
               262.0
             ]
           }
@@ -250,10 +205,7 @@
         "IdleEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Idle": {
           "Active": 0,
@@ -265,10 +217,7 @@
         "StormEnable": {
           "Active": 1,
           "Val": "Off",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "Storm": {
           "Active": 0,
@@ -280,10 +229,7 @@
         "WWSDEnable": {
           "Active": 1,
           "Val": "Auto",
-          "Enum": [
-            "Auto",
-            "On"
-          ]
+          "Enum": ["Auto", "On"]
         },
         "WWSD": {
           "Active": 0,
@@ -295,10 +241,7 @@
         "CWCOEnable": {
           "Active": 1,
           "Val": "On",
-          "Enum": [
-            "Off",
-            "On"
-          ]
+          "Enum": ["Off", "On"]
         },
         "CWCO": {
           "Active": 1,
@@ -310,10 +253,7 @@
         "MeltMan": {
           "Active": 0,
           "Val": "Stop",
-          "Enum": [
-            "Stop",
-            "Melt"
-          ]
+          "Enum": ["Stop", "Melt"]
         },
         "MeltManTime": {
           "Active": 1,
@@ -336,48 +276,18 @@
         "Sensitivity": {
           "Active": 1,
           "Val": "Auto",
-          "Enum": [
-            "Auto",
-            "Min",
-            "-2",
-            "-1",
-            "Mid",
-            "+1",
-            "+2",
-            "Max"
-          ]
+          "Enum": ["Auto", "Min", "-2", "-1", "Mid", "+1", "+2", "Max"]
         },
         "TempUnits": {
           "Active": 1,
           "Val": "F",
-          "Enum": [
-            "F",
-            "C"
-          ]
+          "Enum": ["F", "C"]
         },
         "Energy": {
           "Heat": {
-            "Daily": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
+            "Daily": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             "Monthly": [
-              137.0,
-              126.0,
-              86.0,
-              89.0,
-              18.0,
-              1.0,
-              0.0,
-              0.0,
-              0.0,
-              56.0,
-              72.0,
+              137.0, 126.0, 86.0, 89.0, 18.0, 1.0, 0.0, 0.0, 0.0, 56.0, 72.0,
               210.0
             ]
           }
